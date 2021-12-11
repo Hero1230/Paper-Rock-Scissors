@@ -3,6 +3,7 @@ const startGameBtn = document.getElementById("start-game-btn");
 const SELECTION_ROCK = "rock";
 const SELECTION_PAPER = "paper";
 const SELECTION_SCISSORS = "scissors";
+const DEFAULT_USER_CHOICE = SELECTION_ROCK;
 const RESULT_DRAW = "DRAW";
 const RESULT_PLAYER_WINS = "PLAYER_WINS";
 const RESUTL_COMPUTER_WINS = "COMPUTER_WINS";
@@ -18,7 +19,7 @@ const getPlayerChoice = () => {
 		selection !== SELECTION_SCISSORS
 	) {
 		alert("Invalid choice! We chose Rock for you!");
-		return SELECTION_ROCK;
+		return DEFAULT_USER_CHOICE;
 	}
 	return selection;
 };
@@ -34,7 +35,7 @@ const getComputerChoice = () => {
 	}
 };
 
-const getWinner = (cChoice, pChoice) => {
+const getWinner = (cChoice, pChoice = DEFAULT_USER_CHOICE) => {
 	if (cChoice === pChoice) {
 		return RESULT_DRAW;
 	} else if (
@@ -58,7 +59,9 @@ startGameBtn.addEventListener("click", () => {
 	const playerChoice = getPlayerChoice();
 	const computerChoice = getComputerChoice();
 	const winner = getWinner(computerChoice, playerChoice);
-	let message = `You picked ${playerChoice}, computer picked ${computerChoice}, therefore you `;
+	let message = `You picked ${
+		playerChoice || DEFAULT_USER_CHOICE
+	}, computer picked ${computerChoice}, therefore you `;
 	if (winner === RESULT_DRAW) {
 		message += "had a drawn!";
 	} else if (winner === RESULT_PLAYER_WINS) {
